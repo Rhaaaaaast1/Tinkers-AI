@@ -5,6 +5,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.monster.CrossbowAttackMob;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -116,6 +117,7 @@ public final class MobGearSpawnHandler {
                 return;
             }
         }
+
         int interval = mode == MobGearPlan.Ranged.CROSSBOW ? 30 : 20;
         float radius = mode == MobGearPlan.Ranged.CROSSBOW ? 12.0F : 15.0F;
         mob.goalSelector.addGoal(1, new TinkersRangedAttackGoal(mob, mode, 1.0D, interval, radius));

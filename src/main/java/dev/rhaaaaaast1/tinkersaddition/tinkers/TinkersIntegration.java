@@ -39,5 +39,6 @@ public final class TinkersIntegration {
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, LivingGetProjectileEvent.class, MobAmmoHandler::onGetProjectile);
         // materials live in a dynamic registry, so the tier cache must not survive a server restart
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, ServerStoppedEvent.class, event -> RandomTierMaterials.invalidate());
+
     }
 }

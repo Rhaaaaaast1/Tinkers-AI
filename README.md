@@ -72,6 +72,8 @@
 - 弹药：通过 `LivingGetProjectileEvent` 给手持匠魂发射器的怪物提供箭（无限箭）；玩家的弹药物理不受影响。
 - 拾取到匠魂弓/弩的怪物同样会获得该 AI（进入世界时按手持物重新挂接，读档后也不会丢）。
 
+1.21.1 版本用 Mixin 直接修改原版共享的 `RangedCrossbowAttackGoal`（掠夺者/猪灵/模组生物通用），1.20.1 版本则统一使用上面这个自有 Goal：ForgeGradle 的 SRG 映射里 `ProjectileUtil.getWeaponHoldingHand` 的 `Predicate` 重载没有对应条目，注入出来的 refmap 在正式环境会失效，因此这边不引入 Mixin。
+
 ## 构建
 
 需要 JDK 17：
