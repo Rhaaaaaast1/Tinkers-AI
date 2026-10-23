@@ -1,14 +1,11 @@
 package dev.rhaaaaaast1.tinkersaddition.tinkers;
 
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.ModList;
-
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingGetProjectileEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStoppedEvent;
 
 /**
@@ -37,6 +34,8 @@ public final class TinkersIntegration {
         // runs at join time, after both vanilla and Tinkers' equipment rolls, so their loot is never replaced
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, EntityJoinLevelEvent.class, MobGearSpawnHandler::onEntityJoin);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, LivingGetProjectileEvent.class, MobAmmoHandler::onGetProjectile);
+        // mob gear is datapack driven, so the rules are rebuilt on every reload (including /reload)
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, AddReloadListenerEvent.class, event -> event.addListener(new MobGearReloadListener()));
         // materials live in a dynamic registry, so the tier cache must not survive a server restart
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, ServerStoppedEvent.class, event -> RandomTierMaterials.invalidate());
 

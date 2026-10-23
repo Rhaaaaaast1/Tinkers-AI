@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Drowned;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import slimeknights.tconstruct.library.modifiers.hook.build.ConditionalStatModifierHook;
@@ -26,17 +27,26 @@ import java.util.EnumSet;
  *   <li>bow: charge for the tool's draw speed, then release, which fires through {@code ModifiableBowItem}</li>
  *   <li>crossbow: charge, release to load, then fire the loaded projectile through
  *       {@code ModifiableCrossbowItem#fireCrossbow}</li>
+ *   <li>spear: throw a {@code ThrownTool} like a drowned throws its trident, without consuming the spear</li>
  * </ul>
  * Ammo is supplied for mobs by {@link MobAmmoHandler}.
  */
 public class TinkersRangedAttackGoal extends Goal {
+    /** Which weapon the mob is holding; the goal only knows these kinds. */
+    public enum Ranged {
+        NONE,
+        BOW,
+        CROSSBOW,
+        SPEAR
+    }
+
     /** Vanilla arrow gravity, used to compensate the drop when aiming. */
     private static final double ARROW_GRAVITY = 0.05D;
     /** Rough launch speed of a fully charged Tinkers' projectile. */
     private static final double NOMINAL_ARROW_SPEED = 3.0D;
 
     private final Mob mob;
-    private final MobGearPlan.Ranged mode;
+    private final Ranged mode;
     private final double speedModifier;
     private final int attackIntervalMin;
     private final float attackRadiusSqr;
@@ -45,8 +55,14 @@ public class TinkersRangedAttackGoal extends Goal {
     private boolean strafingClockwise;
     private boolean strafingBackwards;
     private int strafingTime = -1;
+    /** distance a spear thrower stops at, close enough to reliably hit but far enough to stay out of reach */
+    private static final double SPEAR_HOLD_SQR = 36.0D;
+    /** ticks the spear is raised before it leaves the hand, the trident pose is the winding up animation */
+    private static final int SPEAR_CHARGE_TICKS = 12;
+    /** ticks the current charge needs, cached so the stat lookup does not run every tick while using */
+    private int chargeTicks = 20;
 
-    public TinkersRangedAttackGoal(Mob mob, MobGearPlan.Ranged mode, double speedModifier, int attackIntervalMin, float attackRadius) {
+    public TinkersRangedAttackGoal(Mob mob, Ranged mode, double speedModifier, int attackIntervalMin, float attackRadius) {
         this.mob = mob;
         this.mode = mode;
         this.speedModifier = speedModifier;
@@ -55,9 +71,6 @@ public class TinkersRangedAttackGoal extends Goal {
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
 
-    public MobGearPlan.Ranged mode() {
-        return mode;
-    }
 
     @Override
     public boolean canUse() {
@@ -66,7 +79,7 @@ public class TinkersRangedAttackGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return (canUse() || !mob.getNavigation().isDone()) && isHoldingLauncher();
+        return mob.getTarget() != null && isHoldingLauncher();
     }
 
     @Override
@@ -103,6 +116,40 @@ public class TinkersRangedAttackGoal extends Goal {
         }
         seeTime += canSee ? 1 : -1;
 
+        if (mode == Ranged.SPEAR) {
+            // walk in until throwing range, then hold position and lob spears like a trident carrying drowned
+            if (mob.isUsingItem()) {
+                mob.getNavigation().stop();
+            } else if (distSqr > SPEAR_HOLD_SQR) {
+                mob.getNavigation().moveTo(target, speedModifier);
+            } else {
+                mob.getNavigation().stop();
+            }
+            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+            if (mob.isUsingItem()) {
+                // the raised spear is the winding up animation, release it once the charge is done
+                if (mob.getTicksUsingItem() >= chargeTicks && canSee) {
+                    snapAim(target);
+                    mob.releaseUsingItem();
+                    if (TinkersSpearAi.throwSpear(mob, target)) {
+                        attackTime = attackIntervalMin + mob.getRandom().nextInt(10);
+                    }
+                }
+                return;
+            }
+            if (attackTime > 0) {
+                attackTime--;
+                return;
+            }
+            if (seeTime >= 10 && canSee && distSqr <= attackRadiusSqr) {
+                snapAim(target);
+                chargeTicks = SPEAR_CHARGE_TICKS;
+                mob.startUsingItem(InteractionHand.MAIN_HAND);
+            }
+            return;
+        }
+
         if (distSqr <= attackRadiusSqr && seeTime >= 20) {
             mob.getNavigation().stop();
             strafingTime++;
@@ -136,12 +183,13 @@ public class TinkersRangedAttackGoal extends Goal {
         if (mob.isUsingItem()) {
             if (!canSee && seeTime < -60) {
                 mob.stopUsingItem();
-            } else if (canSee && mob.getTicksUsingItem() >= requiredDrawTicks()) {
+            } else if (canSee && mob.getTicksUsingItem() >= chargeTicks) {
                 snapAim(target);
                 releaseAndFire();
             }
             return;
         }
+
 
         if (attackTime > 0) {
             attackTime--;
@@ -151,7 +199,7 @@ public class TinkersRangedAttackGoal extends Goal {
             return;
         }
         // a loaded crossbow fires without another draw
-        if (mode == MobGearPlan.Ranged.CROSSBOW && isCrossbowLoaded()) {
+        if (mode == Ranged.CROSSBOW && isCrossbowLoaded()) {
             snapAim(target);
             fireLoadedCrossbow();
             attackTime = attackIntervalMin;
@@ -162,12 +210,13 @@ public class TinkersRangedAttackGoal extends Goal {
             return;
         }
         snapAim(target);
+        chargeTicks = requiredDrawTicks();
         mob.startUsingItem(InteractionHand.MAIN_HAND);
     }
 
     /** Releases the charge and fires, if the tool managed to load. */
     private void releaseAndFire() {
-        if (mode == MobGearPlan.Ranged.BOW) {
+        if (mode == Ranged.BOW) {
             mob.releaseUsingItem();
             attackTime = attackIntervalMin;
             return;
@@ -213,7 +262,7 @@ public class TinkersRangedAttackGoal extends Goal {
 
     /** Number of ticks the mob has to hold the launcher before a full-power shot. */
     private int requiredDrawTicks() {
-        int base = mode == MobGearPlan.Ranged.CROSSBOW ? 25 : 20;
+        int base = mode == Ranged.CROSSBOW ? 25 : 20;
         ItemStack stack = mob.getMainHandItem();
         if (!(stack.getItem() instanceof ModifiableLauncherItem)) {
             return base;
@@ -230,6 +279,7 @@ public class TinkersRangedAttackGoal extends Goal {
         return switch (mode) {
             case BOW -> stack.getItem() instanceof ModifiableBowItem;
             case CROSSBOW -> stack.getItem() instanceof ModifiableCrossbowItem;
+            case SPEAR -> TinkersSpearAi.isHoldingSpear(mob);
             case NONE -> false;
         };
     }
