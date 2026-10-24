@@ -13,7 +13,7 @@
 | 客户端/服务端 | 双端 |
 | 许可证 | MIT |
 | 作者 | rhaaaaaast1 |
-| 仓库 | https://github.com/Rhaaaaaast1/TinkersAdditions |
+| 仓库 | https://github.com/Rhaaaaaast1/Tinkers-AI |
 | 发布文件 | `build/libs/tinkers-ai-1.1.0.jar` |
 | SHA-256 | `FE8FD30010E1941807DB76EAF3AFD49147844A534BAA02529CDE78AFC379E5A7` |
 | 文件大小 | 62,622 字节 |
