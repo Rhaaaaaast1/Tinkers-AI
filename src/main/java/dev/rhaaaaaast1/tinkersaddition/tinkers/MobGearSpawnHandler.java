@@ -25,7 +25,7 @@ import slimeknights.tconstruct.library.tools.item.ranged.ModifiableCrossbowItem;
  */
 public final class MobGearSpawnHandler {
     /** Marks a mob as already handled, so loading it back from disk never re-rolls its materials. */
-    private static final String PROCESSED_TAG = "tinkersaddition:tinkers_gear";
+    private static final String PROCESSED_TAG = "tinkersai:tinkers_gear";
 
     private static final EquipmentSlot[] EQUIPMENT_SLOTS = {
         EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND,

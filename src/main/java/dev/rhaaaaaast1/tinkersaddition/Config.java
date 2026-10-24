@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
  * {@code 0.25/0.25/0.30/0.17/0.03}.</p>
  *
  * <p>The option names shown in the in-game config screen are translated through the mod's language files, see
- * {@code assets/tinkersaddition/lang}. Only the name and the tooltip provided by the translation key are translated,
+ * {@code assets/tinkersai/lang}. Only the name and the tooltip provided by the translation key are translated,
  * the comment written into the generated toml file itself stays in English.</p>
  */
 @EventBusSubscriber(modid = Tinkersaddition.MODID, bus = EventBusSubscriber.Bus.MOD)
@@ -39,7 +39,7 @@ public final class Config {
 
     private static ForgeConfigSpec.DoubleValue tierWeight(String tier, double defaultValue) {
         return BUILDER
-                .translation("tinkersaddition.configuration.material_tier_weights." + tier)
+                .translation("tinkersai.configuration.material_tier_weights." + tier)
                 .comment("Relative weight of tier " + tier.substring(4) + " materials when rolling the material of a tool part.")
                 .comment("Weights are relative, they do not need to add up to 100.")
                 .comment("Defaults: tier 0 = 25, tier 1 = 25 (together 50%), tier 2 = 30, tier 3 = 17, tier 4 = 3.")

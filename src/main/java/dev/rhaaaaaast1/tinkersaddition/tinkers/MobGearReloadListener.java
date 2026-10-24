@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Loads the mob gear rules from {@code data/<namespace>/tinkersaddition/mob_gear/**}{@code /*.json}.
+ * Loads the mob gear rules from {@code data/<namespace>/tinkersai/mob_gear/**}{@code /*.json}.
  *
  * <p>The folder is split by the mod the mobs come from: vanilla mobs live in {@code mob_gear/minecraft/}, mobs added by
  * other mods go into {@code mob_gear/compat/} (usually into {@code mob_gear/compat/<modid>/}). The paths are only
@@ -37,7 +37,7 @@ import java.util.Optional;
  */
 public final class MobGearReloadListener extends SimpleJsonResourceReloadListener {
     /** Folder name inside a datapack's {@code data/<namespace>/} directory. */
-    public static final String DIRECTORY = "tinkersaddition/mob_gear";
+    public static final String DIRECTORY = "tinkersai/mob_gear";
     /** Sub folder holding rules for vanilla mobs. */
     public static final String VANILLA = "minecraft";
     /** Sub folder holding rules for mobs added by other mods. */

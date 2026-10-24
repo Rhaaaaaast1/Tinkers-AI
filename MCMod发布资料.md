@@ -6,7 +6,7 @@
 | --- | --- |
 | 中文名 | 匠魂 AI |
 | 英文名 | Tinkers' AI |
-| 模组 ID | `tinkersaddition` |
+| 模组 ID | `tinkersai` |
 | 版本 | 1.1.0 |
 | Minecraft | 1.20.1 |
 | 加载器 | Forge 47.4.28 |
@@ -15,7 +15,8 @@
 | 作者 | rhaaaaaast1 |
 | 仓库 | https://github.com/Rhaaaaaast1/TinkersAdditions |
 | 发布文件 | `build/libs/tinkers-ai-1.1.0.jar` |
-| SHA-256 | `5C79C9DBE339470CFAECB3CC9670D02D97A0B2910FA7E1B643EF0BE5AC6E33CD` |
+| SHA-256 | `FE8FD30010E1941807DB76EAF3AFD49147844A534BAA02529CDE78AFC379E5A7` |
+| 文件大小 | 62,622 字节 |
 
 ## 一句话简介
 
@@ -46,8 +47,8 @@ Tinkers' AI 是 Tinkers' Construct（匠魂）的轻量扩展，不新增物品�
 怪物装备规则位于：
 
 ```
-data/<命名空间>/tinkersaddition/mob_gear/minecraft/
-data/<命名空间>/tinkersaddition/mob_gear/compat/<模组id>/
+data/<命名空间>/tinkersai/mob_gear/minecraft/
+data/<命名空间>/tinkersai/mob_gear/compat/<模组id>/
 ```
 
 示例：
@@ -73,7 +74,7 @@ data/<命名空间>/tinkersaddition/mob_gear/compat/<模组id>/
 }
 ```
 
-材料等级权重位于 `config/tinkersaddition-common.toml` 的 `[materialTierWeights]`；修改后下次进入世界生效。
+材料等级权重位于 `config/tinkersai-common.toml` 的 `[materialTierWeights]`；修改后下次进入世界生效。
 
 ## 依赖
 

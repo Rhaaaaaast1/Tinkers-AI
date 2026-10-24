@@ -19,13 +19,13 @@
 
 怪物生成（`EntityJoinLevelEvent`，此时原版与匠魂自己的装备都已完成 roll）时：
 
-1. **剥离原版装备**：物品标签 `#tinkersaddition:stripped_monster_gear` 中的物品（木/石/铁/金/钻石/下界合金的工具与武器、皮/锁链/铁/金/钻石/下界合金护甲、盾牌、弓、弩、剪刀、打火石）会被从六个装备槽移除。
+1. **剥离原版装备**：物品标签 `#tinkersai:stripped_monster_gear` 中的物品（木/石/铁/金/钻石/下界合金的工具与武器、皮/锁链/铁/金/钻石/下界合金护甲、盾牌、弓、弩、剪刀、打火石）会被从六个装备槽移除。
    - 只影响「怪物身上刷出来的装备」，不改原版/匠魂战利品表，也不影响玩家死亡掉落、实体拾取、交易等机制；三叉戟、重锤、海龟壳等特殊装备保留。
 2. **补齐匠魂装备**：按数据包规则 roll 主手/副手/护甲，每件装备的各部件材料**独立随机**。
 
 ### 数据包：适配别的模组
 
-规则放在 `data/<命名空间>/tinkersaddition/mob_gear/minecraft/`（原版怪物）或 `.../compat/<模组 id>/`（模组怪物）：
+规则放在 `data/<命名空间>/tinkersai/mob_gear/minecraft/`（原版怪物）或 `.../compat/<模组 id>/`（模组怪物）：
 
 ```json
 {
@@ -58,7 +58,7 @@
 每个部件先在 tier 0–4 中按权重抽一个等级，再在该等级里随机取材料（某等级没有可用材料时向外就近找）。默认值等价于 **tier 0+1 = 50%、tier 2 = 30%、tier 3 = 17%、tier 4 = 3%**：
 
 ```toml
-# config/tinkersaddition-common.toml
+# config/tinkersai-common.toml
 [materialTierWeights]
 	tier0 = 25.0
 	tier1 = 25.0
@@ -69,7 +69,7 @@
 
 权重是**相对值**，不需要加起来等于 100；全部改成 0 会回退到默认分布。修改后下次进入世界生效。
 
-**关于翻译**：`.toml` 里的 `comment` 只能是英文；游戏内配置界面的选项名来自 `assets/tinkersaddition/lang/*.json` 的 `tinkersaddition.configuration.material_tier_weights.tierN`（已提供 `en_us` 与 `zh_cn`）。
+**关于翻译**：`.toml` 里的 `comment` 只能是英文；游戏内配置界面的选项名来自 `assets/tinkersai/lang/*.json` 的 `tinkersai.configuration.material_tier_weights.tierN`（已提供 `en_us` 与 `zh_cn`）。
 
 ### 远古工具
 
@@ -95,7 +95,7 @@
 ./gradlew build
 ```
 
-产物在 `build/libs/tinkersaddition-1.0.jar`。开发环境运行服务端：
+产物在 `build/libs/tinkersai-1.0.jar`。开发环境运行服务端：
 
 ```bash
 ./gradlew runServer

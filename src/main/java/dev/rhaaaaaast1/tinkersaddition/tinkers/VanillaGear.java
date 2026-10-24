@@ -5,8 +5,8 @@ import net.minecraft.world.item.ItemStack;
 /**
  * The vanilla gear that mobs must no longer spawn with.
  *
- * <p>The list itself lives in the {@code tinkersaddition:stripped_monster_gear} item tag
- * ({@code data/tinkersaddition/tags/items/stripped_monster_gear.json}), so a pack can drop one entry or add modded
+ * <p>The list itself lives in the {@code tinkersai:stripped_monster_gear} item tag
+ * ({@code data/tinkersai/tags/items/stripped_monster_gear.json}), so a pack can drop one entry or add modded
  * weapons without patching code. Removing gear is still done after vanilla rolled the equipment: nothing here touches
  * loot tables or spawn code, so pick-up behavior and Tinkers' Construct's own mob loot stay untouched.</p>
  */

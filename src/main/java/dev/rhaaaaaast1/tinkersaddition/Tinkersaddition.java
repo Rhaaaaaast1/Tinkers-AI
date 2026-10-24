@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 @Mod(Tinkersaddition.MODID)
 public class Tinkersaddition {
     // Define mod id in a common place for everything to reference
-    public static final String MODID = "tinkersaddition";
+    public static final String MODID = "tinkersai";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
