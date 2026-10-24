@@ -1,4 +1,4 @@
-# Tinkers' Addition
+# Tinkers' AI
 
 为 **Tinkers' Construct（匠魂）** 增加两个功能：**怪物生成时的匠魂装备** 与 **匠魂远程武器的怪物 AI**。
 本目录是 **1.20.1 Forge** 版本（1.21.1 NeoForge 版本在同仓库的根目录）。
