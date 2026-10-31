@@ -1,0 +1,13 @@
+priority = 0
+mobs = ["minecraft:vindicator"]
+
+[mainhand]
+chance = 1.0
+
+[[mainhand.items]]
+item = "tconstruct:hand_axe"
+weight = 5
+
+[[mainhand.items]]
+item = "tconstruct:broad_axe"
+weight = 4
