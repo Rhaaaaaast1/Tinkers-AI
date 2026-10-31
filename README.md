@@ -21,12 +21,12 @@ Tinkers' AI 是一个面向 **Minecraft 1.20.1 / Forge** 的轻量、数据驱�
 
 Tinkers' AI has two independent features:
 
-1. **Monster equipment** — replaces only the vanilla gear listed in `#tinkersai:stripped_monster_gear` with Tinkers' Construct tools and armor, following data pack rules.
+1. **Monster equipment** — replaces only the vanilla gear listed in `#tinkersai:stripped_monster_gear` with Tinkers' Construct tools and armor, following config rules.
 2. **Ranged AI** — gives monsters holding Tinkers' launchers or throwing weapons a custom ranged attack goal, because vanilla AI only recognises `BowItem` and `CrossbowItem`.
 
 Tinkers' AI 有两个独立功能：
 
-1. **怪物装备**：按照数据包规则，把 `#tinkersai:stripped_monster_gear` 中列出的原版装备替换为匠魂工具与护甲。
+1. **怪物装备**：按照配置文件，把 `#tinkersai:stripped_monster_gear` 中列出的原版装备替换为匠魂工具与护甲。
 2. **远程 AI**：让手持匠魂发射器或投掷武器的怪物获得自定义远程攻击 AI，因为原版 AI 只识别 `BowItem` 和 `CrossbowItem`。
 
 The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change player drops, and does **not** touch Tinkers' own monster equipment tables.
@@ -43,18 +43,18 @@ The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change p
 
 - Runs when a mob joins the level, after vanilla and Tinkers' Construct have rolled their own equipment.
 - Removes only the vanilla tools, weapons, and armor listed in `#tinkersai:stripped_monster_gear` from the six equipment slots.
-- Rolls Tinkers' gear from data pack rules and fills **empty slots only**, so Tinkers' own mob equipment is preserved.
+- Rolls Tinkers' gear from config rules and fills **empty slots only**, so Tinkers' own mob equipment is preserved.
 - Rolls the material of **each tool part independently**.
-- The bundled rules do not contain ancient tools (`#tconstruct:modifiable/ancient`); a data pack can add them intentionally.
+- The bundled rules do not contain ancient tools (`#tconstruct:modifiable/ancient`); a config file can add them intentionally.
 - Supports any item ID in the rules, not only Tinkers' items; unknown IDs are skipped with a warning.
 
 **中文**
 
 - 在怪物进入世界时执行，此时原版与匠魂都已经完成各自装备的随机。
 - 只从六个装备槽中移除 `#tinkersai:stripped_monster_gear` 里列出的原版工具、武器和护甲。
-- 按数据包规则随机匠魂装备，并且**只填充空槽**，因此匠魂自带的怪物装备会被保留。
+- 按配置文件随机匠魂装备，并且**只填充空槽**，因此匠魂自带的怪物装备会被保留。
 - 每件工具的各部件材料**独立随机**。
-- 内置规则不包含远古工具（`#tconstruct:modifiable/ancient`）；数据包可以有意加入它们。
+- 内置规则不包含远古工具（`#tconstruct:modifiable/ancient`）；配置文件可以有意加入它们。
 - 规则里可以写任意物品 ID，不限于匠魂物品；未知 ID 会跳过并在日志中警告。
 
 ### 2. Ranged combat AI / 远程战斗 AI
@@ -133,14 +133,14 @@ The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change p
 **English**
 
 - Equipment replacement runs on `EntityJoinLevelEvent`, after `Mob#finalizeSpawn` has finished rolling vanilla and Tinkers' equipment.
-- The handler strips only the items in the `#tinkersai:stripped_monster_gear` item tag, then rolls the matching data pack rule.
+- The handler strips only the items in the `#tinkersai:stripped_monster_gear` item tag, then rolls the matching config rule.
 - A small Mixin on Tinkers' `ModifiableItem` supplies the active-use animation needed by the ranged goal; it only touches Tinkers' own class.
 - A `LivingGetProjectileEvent` hook supplies arrows to mobs holding Tinkers' launchers.
 
 **中文**
 
 - 装备替换在 `EntityJoinLevelEvent` 中执行，此时 `Mob#finalizeSpawn` 已经完成原版与匠魂装备的随机。
-- 处理器只移除 `#tinkersai:stripped_monster_gear` 物品标签中的物品，然后按匹配到的数据包规则随机装备。
+- 处理器只移除 `#tinkersai:stripped_monster_gear` 物品标签中的物品，然后按匹配到的配置随机装备。
 - 一个作用于匠魂 `ModifiableItem` 的小型 Mixin 提供远程 AI 所需的主动使用动画；只涉及匠魂自己的类。
 - 通过 `LivingGetProjectileEvent` 为手持匠魂发射器的怪物提供箭。
 
@@ -270,7 +270,7 @@ The material tier weights are stored in `config/tinkersai-common.toml`:
 
 - **Tinkers' Construct is optional.** Without it, no Tinkers' equipment or ranged AI is registered.
 - **No loot table edits.** Vanilla and Tinkers' loot tables, player drops, trades, and chest loot are untouched.
-- **Ancient tools are opt-in.** The bundled rules exclude Tinkers' `#tconstruct:modifiable/ancient` tools; a data pack can add them.
+- **Ancient tools are opt-in.** The bundled rules exclude Tinkers' `#tconstruct:modifiable/ancient` tools; a config file can add them.
 - **Only new mobs.** Mobs already in the world are not retrofitted; only their ranged AI may be reattached when they are loaded.
 - **Other mods may override gear.** If another mod replaces a mob's equipment after it joins the level, that mod's result wins.
 - **Client and server.** Install on both sides; the server controls equipment and AI.
@@ -280,7 +280,7 @@ The material tier weights are stored in `config/tinkersai-common.toml`:
 
 - **匠魂是可选依赖。** 未安装时不会注册匠魂装备或远程 AI。
 - **不修改战利品表。** 原版与匠魂的战利品表、玩家掉落、交易和箱子战利品都不会被改动。
-- **远古工具需手动加入。** 内置规则排除了 `#tconstruct:modifiable/ancient` 中的匠魂工具；数据包可以加入它们。
+- **远古工具需手动加入。** 内置规则排除了 `#tconstruct:modifiable/ancient` 中的匠魂工具；配置文件可以加入它们。
 - **只影响新怪物。** 已经生成的怪物不会被追溯修改；只会在加载时尝试重新挂载远程 AI。
 - **可能被其他模组覆盖。** 如果其他模组在怪物进入世界后替换装备，以那个模组的结果为准。
 - **客户端与服务端都要装。** 服务端负责装备与 AI。
