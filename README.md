@@ -146,23 +146,23 @@ The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change p
 
 ---
 
-## Data pack rules / 数据包规则
+## Config rules / 配置文件规则
 
 ### Where to put rules / 规则放在哪里
 
 **English**
 
-- Vanilla mobs: `data/<namespace>/tinkersai/mob_gear/minecraft/`
-- Modded mobs: `data/<namespace>/tinkersai/mob_gear/compat/<modid>/`
+- Vanilla mobs: `config/tinkersai/mob_gear/minecraft/` (auto-generated on first launch)
+- Modded mobs: `config/tinkersai/mob_gear/compat/<modid>/`
 
 The file name can be anything; every `.json` in these folders is loaded.
 
 **中文**
 
-- 原版怪物：`data/<命名空间>/tinkersai/mob_gear/minecraft/`
-- 模组怪物：`data/<命名空间>/tinkersai/mob_gear/compat/<模组 ID>/`
+- 原版怪物：`config/tinkersai/mob_gear/minecraft/`（首次启动自动生成）
+- 模组怪物：`config/tinkersai/mob_gear/compat/<模组 ID>/`
 
-文件名任意；这些目录下的每个 `.json` 都会被加载。
+文件名任意；这些目录下的每个 `.json` 都会被加载，修改后用 `/reload` 重读。
 
 ### Example / 示例
 

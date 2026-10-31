@@ -31,11 +31,13 @@ public final class TinkersIntegration {
             return;
         }
         registered = true;
+        // create config/tinkersai/mob_gear/ with one file per vanilla mob before the first reload
+        MobGearConfig.ensureDefaults();
         // runs at join time, after both vanilla and Tinkers' equipment rolls, so their loot is never replaced
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOW, false, EntityJoinLevelEvent.class, MobGearSpawnHandler::onEntityJoin);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, LivingGetProjectileEvent.class, MobAmmoHandler::onGetProjectile);
-        // mob gear is datapack driven, so the rules are rebuilt on every reload (including /reload)
-        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, AddReloadListenerEvent.class, event -> event.addListener(new MobGearReloadListener()));
+        // mob gear is config driven; /reload re-reads the folder
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, AddReloadListenerEvent.class, event -> event.addListener(new MobGearConfig()));
         // materials live in a dynamic registry, so the tier cache must not survive a server restart
         MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, ServerStoppedEvent.class, event -> RandomTierMaterials.invalidate());
 
