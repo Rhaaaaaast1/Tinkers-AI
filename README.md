@@ -8,9 +8,9 @@
 [![Minecraft](https://img.shields.io/badge/Minecraft-1.20.1-62B47A)](#requirements--环境)
 [![Forge](https://img.shields.io/badge/Forge-47.x-DFA86A)](#requirements--环境)
 
-Tinkers' AI is a lightweight, data-driven addon for **Minecraft 1.20.1 / Forge**. It gives newly spawned monsters Tinkers' Construct equipment and teaches them to use Tinkers' bows, crossbows, and throwing weapons. Tinkers' Construct and Mantle are optional dependencies: without them the mod loads normally and simply does nothing.
+Tinkers' AI is a lightweight, config-driven addon for **Minecraft 1.20.1 / Forge**. It gives newly spawned monsters Tinkers' Construct equipment and teaches them to use Tinkers' bows, crossbows, and throwing weapons. Tinkers' Construct and Mantle are optional dependencies: without them the mod loads normally and simply does nothing.
 
-Tinkers' AI 是一个面向 **Minecraft 1.20.1 / Forge** 的轻量、数据驱动的匠魂附属模组。它会让新生成的怪物装备匠魂工具与护甲，并让怪物学会使用匠魂的弓、弩和投掷武器。匠魂与 Mantle 是可选依赖：未安装时模组仍可正常加载，只是不会启用相关功能。
+Tinkers' AI 是一个面向 **Minecraft 1.20.1 / Forge** 的轻量、配置文件驱动的匠魂附属模组。它会让新生成的怪物装备匠魂工具与护甲，并让怪物学会使用匠魂的弓、弩和投掷武器。匠魂与 Mantle 是可选依赖：未安装时模组仍可正常加载，只是不会启用相关功能。
 
 > This README is bilingual. Each section contains English first, followed by Simplified Chinese.  
 > 本文档为中英对照，每节先英文、后简体中文。
@@ -76,7 +76,7 @@ The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change p
 - AI 在怪物进入世界时挂载；之后捡起物品不会新增 AI。
 - 怪物之后捡起匠魂发射器时，也会自动挂上该 AI。
 
-### 3. Data-driven rules / 数据驱动规则
+### 3. Rule system / 规则系统
 
 **English**
 
@@ -115,14 +115,14 @@ The mod does **not** edit vanilla or Tinkers' loot tables, does **not** change p
 **English**
 
 1. Install **Minecraft 1.20.1** and **Forge 47.x**.
-2. Put `tinkers-ai-1.1.0.jar` into the `mods` folder.
+2. Put `tinkers-ai-1.1.1.jar` into the `mods` folder.
 3. Optionally install **Tinkers' Construct 3.12.1+** and **Mantle 1.11+**.
 4. Launch the game. The mod works on both single-player and dedicated servers.
 
 **中文**
 
 1. 安装 **Minecraft 1.20.1** 与 **Forge 47.x**。
-2. 将 `tinkers-ai-1.1.0.jar` 放入 `mods` 文件夹。
+2. 将 `tinkers-ai-1.1.1.jar` 放入 `mods` 文件夹。
 3. 可选安装 **Tinkers' Construct 3.12.1+** 与 **Mantle 1.11+**。
 4. 启动游戏。单人游戏与专用服务器均可使用。
 
@@ -301,7 +301,7 @@ Requires **JDK 17**:
 The output jar is:
 
 ```text
-build/libs/tinkers-ai-1.1.0.jar
+build/libs/tinkers-ai-1.1.1.jar
 ```
 
 For a development server:
@@ -323,7 +323,7 @@ Put `Mantle-1.20.1-1.11.124.jar` and `TConstruct-1.20.1-3.12.1.237.jar` into `ru
 输出文件：
 
 ```text
-build/libs/tinkers-ai-1.1.0.jar
+build/libs/tinkers-ai-1.1.1.jar
 ```
 
 启动开发服务器：
